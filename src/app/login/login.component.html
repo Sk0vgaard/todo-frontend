@@ -1,1 +1,13 @@
-<p>login works!</p>
+<small *ngIf="invalidLogin">{{errorMessage}}</small>
+
+<div>
+  <label>
+    User Name:
+    <input type="text" name="username" [(ngModel)]="username">
+  </label>
+  <label>
+    Password:
+    <input type="password" name="password" [(ngModel)]="password">
+  </label>
+  <button (click)="handleLogin()">Login</button>
+</div>
