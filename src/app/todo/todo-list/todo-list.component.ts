@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoMock } from '../todo-mock';
 
 @Component({
-  selector: 'todo-todo-list',
+  selector: 'todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
 
   todos = [
-    {id: 1, description: 'Remember to shop'},
-    {id: 2, description: 'Remember to walk the dog'},
-    {id: 3, description: 'Remember to make dinner'},
-    {id: 4, description: 'Remember to feed the kid'},
+    new TodoMock(1, 'Remember to shop', false, new Date()),
+    new TodoMock(2, 'Remember to walk the dog', false, new Date()),
+    new TodoMock(3, 'Remember to make dinner', false, new Date()),
+    new TodoMock(4, 'Remember to feed the kid', false, new Date()),
   ];
 
   constructor() {

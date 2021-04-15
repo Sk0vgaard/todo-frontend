@@ -8,6 +8,9 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
 import { TodoListComponent } from './todo/todo-list/todo-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +18,15 @@ import { TodoListComponent } from './todo/todo-list/todo-list.component';
     WelcomeComponent,
     LoginComponent,
     ErrorComponent,
-    TodoListComponent
+    TodoListComponent,
+    NavigationBarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

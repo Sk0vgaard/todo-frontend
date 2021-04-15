@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'welcome/:name', component: WelcomeComponent },
-  { path: 'todolist', component: TodoListComponent },
+  { path: ':name/todolist', component: TodoListComponent },
   { path: '**', component: ErrorComponent },
 ];
 
