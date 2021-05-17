@@ -20,11 +20,10 @@ export class NavigationBarComponent implements OnInit {
   ngOnInit(): void {
     this.hardcodedAuthenticationService.isUserLoggedIn()
       .subscribe(isUserLoggedIn => this.isUserLoggedIn = isUserLoggedIn);
-    console.log('Is user logged in: ' + this.isUserLoggedIn);
   }
 
   logout(): void {
     this.hardcodedAuthenticationService.logout();
+    this.router.navigate(['login']);
   }
-
 }

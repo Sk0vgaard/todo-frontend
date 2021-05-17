@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HardcodedAuthenticationService {
 
-  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isLoggedIn$: Observable<boolean> = this.isLoggedIn.asObservable();
+  private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isLoggedIn$: Observable<boolean> = this.isLoggedIn.asObservable();
 
-  constructor(private router: Router) {
+  private readonly AUTHENTICATED_USER = 'authenticatedUser';
+  private readonly PASSWORD = '123';
+  private readonly USERNAME = 'Skovgaard';
+
+  constructor() {
   }
 
   public login(username: string, password: string): Observable<boolean> {
-    if (username === 'Skovgaard' && password === '123') {
+    if (username === this.USERNAME && password === this.PASSWORD) {
       this.isLoggedIn.next(true);
-      sessionStorage.setItem('authenticatedUser', username);
-      this.router.navigate(['welcome', username]);
+      sessionStorage.setItem(this.AUTHENTICATED_USER, username);
     }
     return this.isLoggedIn$;
   }
@@ -29,11 +31,10 @@ export class HardcodedAuthenticationService {
   }
 
   public isUserLoggedIn(): Observable<boolean> {
-    const userLoggedIn = sessionStorage.getItem('authenticatedUser');
-    if (userLoggedIn) {
-      this.isLoggedIn.next(true);
+    const userLoggedIn = !!sessionStorage.getItem(this.AUTHENTICATED_USER);
+    if (userLoggedIn !== this.isLoggedIn.getValue()) {
+      this.isLoggedIn.next(userLoggedIn);
     }
     return this.isLoggedIn$;
   }
-
 }

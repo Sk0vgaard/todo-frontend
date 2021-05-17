@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HardcodedAuthenticationService } from '../services/hardcoded-authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'todo-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   invalidLogin = false;
 
   constructor(
-    private hardcodedAuthenticationService: HardcodedAuthenticationService
+    private hardcodedAuthenticationService: HardcodedAuthenticationService,
+    private router: Router
   ) {
   }
 
@@ -25,15 +27,15 @@ export class LoginComponent implements OnInit {
       .subscribe(isUserLoggedIn => this.isUserLoggedIn = isUserLoggedIn);
   }
 
-  public handleLogin(): void {
-    if (this.username === 'Skovgaard' && this.password === '123') {
-      this.hardcodedAuthenticationService.login(this.username, this.password)
-        .subscribe((isLoggedIn) => {
+  public login(): void {
+    this.hardcodedAuthenticationService.login(this.username, this.password)
+      .subscribe((isLoggedIn: boolean) => {
+        if (isLoggedIn) {
           this.isUserLoggedIn = isLoggedIn;
-        });
-      this.invalidLogin = false;
-    } else {
-      this.invalidLogin = true;
-    }
+          this.router.navigate(['welcome', this.username]);
+        } else {
+          this.invalidLogin = true;
+        }
+      });
   }
 }
