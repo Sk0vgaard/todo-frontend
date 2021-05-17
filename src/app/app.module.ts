@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { LoginComponent } from './authentication/login.component';
+import { LoginComponent } from './authentication/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
 import { TodoListComponent } from './todo/todo-list/todo-list.component';

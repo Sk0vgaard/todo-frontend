@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HardcodedAuthenticationService } from '../services/hardcoded-authentication.service';
+import { HardcodedAuthenticationService } from '../../services/hardcoded-authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
 
   username = 'Skovgaard';
   password = '';
-  errorMessage = 'Invalid Credentials';
   invalidLogin = false;
 
   constructor(
