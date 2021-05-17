@@ -5,19 +5,19 @@
         <a class="nav-link" routerLink="">Home</a>
       </div>
     </li>
-    <li class="nav-item">
+    <li *ngIf="isUserLoggedIn" class="nav-item">
       <a class="nav-link" routerLink="welcome/Skovgaard">Welcome</a>
     </li>
-    <li class="nav-item">
+    <li *ngIf="isUserLoggedIn" class="nav-item">
       <a class="nav-link" routerLink="/Skovgaards/todolist">Todo list</a>
     </li>
   </ul>
   <ul class="navbar-nav navbar-collapse justify-content-end">
-    <li class="nav-item">
+    <li *ngIf="!isUserLoggedIn" class="nav-item">
       <a class="nav-link" routerLink="/login">Login</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/">Logout</a>
+    <li *ngIf="isUserLoggedIn" class="nav-item">
+      <a class="nav-link" routerLink="/" (click)="logout()">Logout</a>
     </li>
   </ul>
 </nav>
