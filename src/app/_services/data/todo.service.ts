@@ -8,10 +8,19 @@ import { Todo } from '../../_shared/todo';
 })
 export class TodoService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   getAllTodos(username: string): Observable<Todo[]> {
     return this.httpClient.get<Todo[]>(`http://localhost:8080/users/${username}/todos`);
   }
+
+  deleteTodo(username: string, id: string): Observable<Todo> {
+    return this.httpClient.delete<Todo>(`http://localhost:8080/users/${username}/todos/${id}`);
+  }
+
+  // updateTodo(username: string, id: string): Observable<Todo> {
+  //   return this.httpClient.post<Todo>(`http://localhost:8080/users/${username}/todos/${id}`);
+  // }
 
 }

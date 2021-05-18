@@ -4,18 +4,35 @@
   <table class="table">
     <thead>
     <tr>
+      <th>Actions</th>
       <th>User</th>
       <th>Description</th>
       <th>Target date</th>
       <th>Completed</th>
+      <th>ID</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let todo of todos">
+      <td>
+        <button class="btn btn-outline-danger btn-sm"
+                mwlConfirmationPopover
+                placement="right"
+                [popoverTitle]="'Delete confirmation'"
+                [popoverMessage]="'You are about to delete (' + todo.description + ') are you sure?'"
+                (confirm)="deleteTodo(todo.username, todo.id)"
+                (cancel)="cancelClicked = true">
+          <i class="bi bi-trash-fill"></i>
+        </button>
+        <button class="btn btn-outline-primary btn-sm" (click)="updateTodo(todo.username, todo.id)">
+          <i class="bi bi-pencil-fill"></i>
+        </button>
+      </td>
       <td>{{todo.username}}</td>
       <td>{{todo.description}}</td>
       <td>{{todo.targetDate | date}}</td>
       <td>{{todo.done}}</td>
+      <td>{{todo.id}}</td>
     </tr>
     </tbody>
   </table>
