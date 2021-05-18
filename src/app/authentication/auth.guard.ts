@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { HardcodedAuthenticationService } from '../services/hardcoded-authentication.service';
+import { HardcodedAuthenticationService } from '../_services/hardcoded-authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,9 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this.router.navigate(['/login']);
+    if (!this.hardcodedAuthenticationService.isUserLoggedIn()) {
+      this.router.createUrlTree(['/login']);
+    }
     return this.hardcodedAuthenticationService.isUserLoggedIn();
   }
 }

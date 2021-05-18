@@ -4,3 +4,15 @@
   <br>
   <h4>Welcome {{username}}. You can manage your todos <a routerLink="/{{username}}s/todolist">here</a></h4>
 </div>
+
+<button class="btn btn-success" (click)="getWelcomeMessageWithPathVariable()">Welcome message</button>
+
+<div class="container" *ngIf="errorMessage">
+  <h2>Customized error message from service</h2>
+  {{errorMessage}}
+</div>
+
+<div class="container" *ngIf="welcomeMessage">
+  <h2>Customized welcome message from service</h2>
+  {{welcomeMessage}}
+</div>

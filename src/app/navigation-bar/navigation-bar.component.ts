@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HardcodedAuthenticationService } from '../services/hardcoded-authentication.service';
+import { HardcodedAuthenticationService } from '../_services/hardcoded-authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
