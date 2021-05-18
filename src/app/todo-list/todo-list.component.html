@@ -4,6 +4,7 @@
   <table class="table">
     <thead>
     <tr>
+      <th>User</th>
       <th>Description</th>
       <th>Target date</th>
       <th>Completed</th>
@@ -11,6 +12,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let todo of todos">
+      <td>{{todo.username}}</td>
       <td>{{todo.description}}</td>
       <td>{{todo.targetDate | date}}</td>
       <td>{{todo.done}}</td>

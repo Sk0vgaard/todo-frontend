@@ -7,7 +7,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
-import { TodoListComponent } from './todo/todo-list/todo-list.component';
+import { TodoListComponent } from './todo-list/todo-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
