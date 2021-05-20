@@ -13,6 +13,8 @@ export class TodoListComponent implements OnInit {
   public todos: Todo[] | undefined;
   public errorMessage: string | undefined;
   public cancelClicked: boolean | undefined;
+  public editRowIndex: number = -1;
+  public editMode: boolean = false;
 
   constructor(
     private todoService: TodoService,
@@ -22,16 +24,6 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllTodos();
-  }
-
-  private getAllTodos(): void {
-    this.todoService.getAllTodos('Skovgaard')
-      .subscribe(
-        todos => {
-          this.todos = todos;
-        },
-        error => this.errorMessage = error.error.message
-      );
   }
 
   public deleteTodo(username: string, id: string): void {
@@ -45,5 +37,26 @@ export class TodoListComponent implements OnInit {
 
   public updateTodo(username: string, id: string): void {
     this.router.navigate([`${username}/todo/${id}`]);
+  }
+
+  onEdit(index: number): void {
+    console.log(index);
+    this.editRowIndex = index;
+    this.editMode = true;
+  }
+
+  onCancelEdit(): void {
+    this.editRowIndex = -1;
+    this.editMode = false;
+  }
+
+  private getAllTodos(): void {
+    this.todoService.getAllTodos('Skovgaard')
+      .subscribe(
+        todos => {
+          this.todos = todos;
+        },
+        error => this.errorMessage = error.error.message
+      );
   }
 }
