@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from '../_shared/todo';
+import { Todo } from '../_shared/dtos/todo';
 import { TodoService } from '../_services/data/todo.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'todo-list',
@@ -17,9 +16,7 @@ export class TodoListComponent implements OnInit {
   public editMode: boolean = false;
 
   constructor(
-    private todoService: TodoService,
-    private router: Router
-  ) {
+    private todoService: TodoService) {
   }
 
   ngOnInit(): void {
@@ -35,8 +32,8 @@ export class TodoListComponent implements OnInit {
     );
   }
 
-  public updateTodo(username: string, id: string): void {
-    this.router.navigate([`${username}/todo/${id}`]);
+  public updateTodo(id: string): void {
+    console.log('updated...');
   }
 
   onEdit(index: number): void {
