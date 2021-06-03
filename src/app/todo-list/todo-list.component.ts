@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from '../_shared/dtos/todo';
+import { TodoModel } from '../_shared/_models/todoModel';
 import { TodoService } from '../_services/data/todo.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { TodoService } from '../_services/data/todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  public todos: Todo[] | undefined;
+  public todos: TodoModel[] | undefined;
   public errorMessage: string | undefined;
   public cancelClicked: boolean | undefined;
   public editRowIndex: number = -1;
@@ -26,14 +26,14 @@ export class TodoListComponent implements OnInit {
   public deleteTodo(username: string, id: string): void {
     this.todoService.deleteTodo('Skovgaard', id).subscribe(
       todo => {
-        console.log(`Todo "${todo.description}" has been deleted...`);
+        console.log(`Todo "${todo}" has been deleted...`);
         this.getAllTodos();
       }, error => this.errorMessage = error.error.message
     );
   }
 
-  public updateTodo(id: string): void {
-    console.log('updated...');
+  public updateTodo(todo: TodoModel): void {
+    console.log(`updated todo: ${todo.targetDate}`);
   }
 
   onEdit(index: number): void {
