@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { TodoModel } from '../_shared/_models/todoModel';
 import { TodoService } from '../_services/data/todo.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,24 +9,20 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements AfterViewInit, OnInit {
+export class TodoListComponent implements AfterViewInit {
 
   public dataSource: MatTableDataSource<TodoModel>;
   public errorMessage: string | undefined;
   public displayedColumns: string[] = ['position', 'username', 'description', 'done', 'targetDate'];
 
-  constructor(private todoService: TodoService) {
-    this.dataSource = new MatTableDataSource<TodoModel>()
-  }
-
   @ViewChild(MatSort) sort: MatSort;
 
-  public ngOnInit(): void {
+  constructor(private todoService: TodoService) {
+    this.dataSource = new MatTableDataSource<TodoModel>();
   }
 
   public ngAfterViewInit(): void {
     this.getAllTodos();
-    this.dataSource.sort = this.sort;
   }
 
   public deleteTodo(username: string, id: string): void {
@@ -46,6 +42,7 @@ export class TodoListComponent implements AfterViewInit, OnInit {
     this.todoService.getAllTodos('Skovgaard')
       .subscribe((response: TodoModel[]) => {
           this.dataSource = new MatTableDataSource<TodoModel>(response);
+          this.dataSource.sort = this.sort;
         },
         error => this.errorMessage = error.error.message
       );
