@@ -14,6 +14,10 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { NgbDateCustomParserFormatter } from './_shared/formatter/NgbDateCustomParserFormatter';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -33,10 +37,14 @@ import { NgbDateCustomParserFormatter } from './_shared/formatter/NgbDateCustomP
     HttpClientModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
-    })
+    }),
+    MatTabsModule,
+    MatTableModule,
+    BrowserAnimationsModule,
+    MatSortModule
   ],
   providers: [
-    {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter}
+    { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }
   ],
   bootstrap: [AppComponent],
   exports: []

@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TodoModel } from '../_shared/_models/todoModel';
 import { TodoService } from '../_services/data/todo.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements AfterViewInit, OnInit {
 
-  public todos: TodoModel[] | undefined;
+  public dataSource: MatTableDataSource<TodoModel>;
   public errorMessage: string | undefined;
-  public cancelClicked: boolean | undefined;
-  public editRowIndex: number = -1;
-  public editMode: boolean = false;
+  public displayedColumns: string[] = ['position', 'username', 'description', 'done', 'targetDate'];
 
-  constructor(
-    private todoService: TodoService) {
+  constructor(private todoService: TodoService) {
+    this.dataSource = new MatTableDataSource<TodoModel>()
   }
 
-  ngOnInit(): void {
+  @ViewChild(MatSort) sort: MatSort;
+
+  public ngOnInit(): void {
+  }
+
+  public ngAfterViewInit(): void {
     this.getAllTodos();
+    this.dataSource.sort = this.sort;
   }
 
   public deleteTodo(username: string, id: string): void {
@@ -36,22 +42,10 @@ export class TodoListComponent implements OnInit {
     console.log(`updated todo: ${todo.targetDate}`);
   }
 
-  onEdit(index: number): void {
-    console.log(index);
-    this.editRowIndex = index;
-    this.editMode = true;
-  }
-
-  onCancelEdit(): void {
-    this.editRowIndex = -1;
-    this.editMode = false;
-  }
-
   private getAllTodos(): void {
     this.todoService.getAllTodos('Skovgaard')
-      .subscribe(
-        todos => {
-          this.todos = todos;
+      .subscribe((response: TodoModel[]) => {
+          this.dataSource = new MatTableDataSource<TodoModel>(response);
         },
         error => this.errorMessage = error.error.message
       );
