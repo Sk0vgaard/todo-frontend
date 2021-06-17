@@ -1,23 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <ul class="navbar-nav navbar-collapse">
-    <li class="nav-item">
-      <div class="navbar-brand">
-        <a class="nav-link" routerLink="">Home</a>
-      </div>
-    </li>
-    <li *ngIf="isUserLoggedIn" class="nav-item">
-      <a class="nav-link" routerLink="welcome/Skovgaard">Welcome</a>
-    </li>
-    <li *ngIf="isUserLoggedIn" class="nav-item">
-      <a class="nav-link" routerLink="/Skovgaards/todolist">Todo list</a>
-    </li>
-  </ul>
-  <ul class="navbar-nav navbar-collapse justify-content-end">
-    <li *ngIf="!isUserLoggedIn" class="nav-item">
-      <a class="nav-link" routerLink="/login">Login</a>
-    </li>
-    <li *ngIf="isUserLoggedIn" class="nav-item">
-      <a class="nav-link" routerLink="/" (click)="logout()">Logout</a>
-    </li>
-  </ul>
+<nav mat-tab-nav-bar>
+  <a mat-tab-link routerLink="">Home</a>
+  <a mat-tab-link *ngIf="isUserLoggedIn" routerLink="welcome/Skovgaard">Welcome</a>
+  <a mat-tab-link *ngIf="isUserLoggedIn" routerLink="Skovgaards/todolist">Todo list</a>
+  <a mat-tab-link *ngIf="isUserLoggedIn" routerLink="/" (click)="logout()">Logout</a>
+  <a mat-tab-link *ngIf="!isUserLoggedIn" routerLink="login">Login</a>
 </nav>

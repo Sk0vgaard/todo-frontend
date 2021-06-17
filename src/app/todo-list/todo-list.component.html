@@ -1,78 +1,16 @@
-<h3>My todos</h3>
+<div class="padding">
+  <h3>My todos</h3>
 
-<div class="container">
-  <table class="table">
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>User</th>
-      <th>Description</th>
-      <th>Target date</th>
-      <th>Completed</th>
-      <th>ID</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let todo of todos; let i = index">
-      <td>{{i}}</td>
-      <td>
-        <div *ngIf="i !== editRowIndex">
-          {{todo.username}}
-        </div>
-        <div *ngIf="i === editRowIndex">
-          <input type="text" class="form-control" [(ngModel)]="todo.username">
-        </div>
-      </td>
-      <td>
-        <div *ngIf="i !== editRowIndex">
-          {{todo.description}}
-        </div>
-        <div *ngIf="i === editRowIndex">
-          <input type="text" class="form-control" [(ngModel)]="todo.description">
-        </div>
-      </td>
-      <td>
-        <div *ngIf="i !== editRowIndex">
-          {{todo.targetDate | date: 'dd/MM/yyyy'}}
-        </div>
-        <div *ngIf="i === editRowIndex">
-          <div class="input-group">
-            <input class="form-control" placeholder="{{todo.targetDate | date: 'dd/MM/yyyy'}}"
-                   name="dp" [(ngModel)]="todo.targetDate" ngbDatepicker #d="ngbDatepicker" placement="right">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-            </div>
-          </div>
-        </div>
-      </td>
-      <td>{{todo.done}}</td>
-      <td>{{todo.id}}</td>
-      <td>
-        <div *ngIf="i !== editRowIndex">
-          <button class="btn btn-outline-danger btn-sm"
-                  mwlConfirmationPopover
-                  placement="left"
-                  [popoverTitle]="'Delete confirmation'"
-                  [popoverMessage]="'You are about to delete (' + todo.description + ') are you sure?'"
-                  (confirm)="deleteTodo(todo.username, todo.id)"
-                  (cancel)="cancelClicked = true">
-            <i class="bi bi-trash-fill"></i>
-          </button>
-          <button class="btn btn-outline-primary btn-sm" (click)="onEdit(i)">
-            <i class="bi bi-pencil-fill"></i>
-          </button>
-        </div>
-        <div *ngIf="i === editRowIndex">
-          <button class="btn btn-outline-warning btn-sm" (click)="onCancelEdit()">
-            <i class="bi bi-x-lg"></i>
-          </button>
-          <button class="btn btn-outline-success btn-sm" (click)="updateTodo(todo)">
-            <i class="bi bi-check-lg"></i>
-          </button>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<todo-reusable-table [tableData]="todos"
+                     [tableColumns]="todoTableColumns"
+                     [isFilterable]="true"
+                     [isPageable]="true"
+                     [paginationSizes]="[2,4,6]"
+                     [defaultPageSize]="4"
+                     (sort)="sortData($event)"
+                     [rowActionIcon]="'delete'"
+                     (rowAction)="deleteTodo($event)">
+</todo-reusable-table>
+
+<!--<mock-orders></mock-orders>-->
 </div>

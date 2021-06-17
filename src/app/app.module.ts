@@ -12,8 +12,11 @@ import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { NgbDateCustomParserFormatter } from './_shared/formatter/NgbDateCustomParserFormatter';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableModule } from './_shared/components/table/table.module';
+import { OrdersComponent } from './mock-table/orders.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { NgbDateCustomParserFormatter } from './_shared/formatter/NgbDateCustomP
     ErrorComponent,
     TodoListComponent,
     NavigationBarComponent,
-    FooterComponent
+    FooterComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -31,12 +35,12 @@ import { NgbDateCustomParserFormatter } from './_shared/formatter/NgbDateCustomP
     FormsModule,
     NgbModule,
     HttpClientModule,
-    ConfirmationPopoverModule.forRoot({
-      confirmButtonType: 'danger'
-    })
+    MatTabsModule,
+    BrowserAnimationsModule,
+    TableModule,
   ],
   providers: [
-    {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter}
+    { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }
   ],
   bootstrap: [AppComponent],
   exports: []

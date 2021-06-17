@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoModel } from '../_shared/_models/todoModel';
+import { Todo } from '../_shared/_models/todo';
 import { TodoService } from '../_services/data/todo.service';
+import { Sort } from '@angular/material/sort';
+import { TableColumn } from '../_shared/components/table/table-column';
 
 @Component({
   selector: 'todo-list',
@@ -9,51 +11,80 @@ import { TodoService } from '../_services/data/todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  public todos: TodoModel[] | undefined;
-  public errorMessage: string | undefined;
-  public cancelClicked: boolean | undefined;
-  public editRowIndex: number = -1;
-  public editMode: boolean = false;
+  public todos: Todo[] = [];
+  public errorMessage: string;
+  public todoTableColumns: TableColumn[];
 
-  constructor(
-    private todoService: TodoService) {
+  constructor(private todoService: TodoService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getAllTodos();
-  }
-
-  public deleteTodo(username: string, id: string): void {
-    this.todoService.deleteTodo('Skovgaard', id).subscribe(
-      todo => {
-        console.log(`Todo "${todo}" has been deleted...`);
-        this.getAllTodos();
-      }, error => this.errorMessage = error.error.message
-    );
-  }
-
-  public updateTodo(todo: TodoModel): void {
-    console.log(`updated todo: ${todo.targetDate}`);
-  }
-
-  onEdit(index: number): void {
-    console.log(index);
-    this.editRowIndex = index;
-    this.editMode = true;
-  }
-
-  onCancelEdit(): void {
-    this.editRowIndex = -1;
-    this.editMode = false;
+    this.initializeColumns();
   }
 
   private getAllTodos(): void {
     this.todoService.getAllTodos('Skovgaard')
       .subscribe(
-        todos => {
+        (todos: Todo[]) => {
           this.todos = todos;
+          console.log(this.todos);
         },
         error => this.errorMessage = error.error.message
       );
+  }
+
+  public updateTodo(todo: Todo): void {
+    console.log(`updated todo: ${todo.targetDate}`);
+  }
+
+  deleteTodo(todo: Todo) {
+    this.todoService.deleteTodo(todo.id).subscribe(
+      (todo: Todo) => {
+        this.todos = this.todos.filter(item => item.id !== todo.id);
+        console.log(`Todo "${JSON.stringify(todo)}" has been deleted...`);
+        // this.getAllTodos();
+      }, error => this.errorMessage = error.error.message
+    );
+  }
+
+  initializeColumns(): void {
+    this.todoTableColumns = [
+      {
+        columnName: 'Username',
+        modelItem: 'username',
+        position: 'right',
+        sort: true
+      },
+      {
+        columnName: 'Description',
+        modelItem: 'description',
+        position: 'right',
+        sort: true
+      },
+      {
+        columnName: 'Done',
+        modelItem: 'done',
+        position: 'right',
+        sort: false
+      },
+      {
+        columnName: 'Target date',
+        modelItem: 'targetDate',
+        position: 'right',
+        sort: true
+      }
+    ];
+  }
+
+  sortData(sortParameters: Sort) {
+    const keyName = sortParameters.active;
+    if (sortParameters.direction === 'asc') {
+      // @ts-ignore
+      this.todos = this.todos.sort((a: Todo, b: Todo) => a[keyName].localeCompare(b[keyName]));
+    } else if (sortParameters.direction === 'desc') {
+      // @ts-ignore
+      this.todos = this.todos.sort((a: Todo, b: Todo) => b[keyName].localeCompare(a[keyName]));
+    }
   }
 }
