@@ -1,36 +1,16 @@
 <div class="padding">
   <h3>My todos</h3>
 
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
-             matSort
-             matSortActive="username"
-             matSortDirection="asc">
-    <ng-container matColumnDef="position">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>No.</mat-header-cell>
-      <mat-cell *matCellDef="let todo; let i = index"> {{i + 1}}</mat-cell>
-    </ng-container>
+<todo-reusable-table [tableData]="todos"
+                     [tableColumns]="todoTableColumns"
+                     [isFilterable]="true"
+                     [isPageable]="true"
+                     [paginationSizes]="[2,4,6]"
+                     [defaultPageSize]="4"
+                     (sort)="sortData($event)"
+                     [rowActionIcon]="'delete'"
+                     (rowAction)="deleteTodo($event)">
+</todo-reusable-table>
 
-    <ng-container matColumnDef="username">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let todo"> {{todo.username}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-      <mat-cell *matCellDef="let todo"> {{todo.description}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="done">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Done</mat-header-cell>
-      <mat-cell *matCellDef="let todo"> {{todo.done}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="targetDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Target date</mat-header-cell>
-      <mat-cell *matCellDef="let todo"> {{todo.targetDate | date}}</mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+<!--<mock-orders></mock-orders>-->
 </div>

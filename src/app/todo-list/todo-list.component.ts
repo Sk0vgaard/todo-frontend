@@ -1,50 +1,90 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { TodoModel } from '../_shared/_models/todoModel';
+import { Component, OnInit } from '@angular/core';
+import { Todo } from '../_shared/_models/todo';
 import { TodoService } from '../_services/data/todo.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
+import { TableColumn } from '../_shared/components/table/table-column';
 
 @Component({
   selector: 'todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements AfterViewInit {
+export class TodoListComponent implements OnInit {
 
-  public dataSource: MatTableDataSource<TodoModel>;
-  public errorMessage: string | undefined;
-  public displayedColumns: string[] = ['position', 'username', 'description', 'done', 'targetDate'];
-
-  @ViewChild(MatSort) sort: MatSort;
+  public todos: Todo[] = [];
+  public errorMessage: string;
+  public todoTableColumns: TableColumn[];
 
   constructor(private todoService: TodoService) {
-    this.dataSource = new MatTableDataSource<TodoModel>();
   }
 
-  public ngAfterViewInit(): void {
+  public ngOnInit(): void {
     this.getAllTodos();
-  }
-
-  public deleteTodo(username: string, id: string): void {
-    this.todoService.deleteTodo('Skovgaard', id).subscribe(
-      todo => {
-        console.log(`Todo "${todo}" has been deleted...`);
-        this.getAllTodos();
-      }, error => this.errorMessage = error.error.message
-    );
-  }
-
-  public updateTodo(todo: TodoModel): void {
-    console.log(`updated todo: ${todo.targetDate}`);
+    this.initializeColumns();
   }
 
   private getAllTodos(): void {
     this.todoService.getAllTodos('Skovgaard')
-      .subscribe((response: TodoModel[]) => {
-          this.dataSource = new MatTableDataSource<TodoModel>(response);
-          this.dataSource.sort = this.sort;
+      .subscribe(
+        (todos: Todo[]) => {
+          this.todos = todos;
+          console.log(this.todos);
         },
         error => this.errorMessage = error.error.message
       );
+  }
+
+  public updateTodo(todo: Todo): void {
+    console.log(`updated todo: ${todo.targetDate}`);
+  }
+
+  deleteTodo(todo: Todo) {
+    this.todoService.deleteTodo(todo.id).subscribe(
+      (todo: Todo) => {
+        this.todos = this.todos.filter(item => item.id !== todo.id);
+        console.log(`Todo "${JSON.stringify(todo)}" has been deleted...`);
+        // this.getAllTodos();
+      }, error => this.errorMessage = error.error.message
+    );
+  }
+
+  initializeColumns(): void {
+    this.todoTableColumns = [
+      {
+        columnName: 'Username',
+        modelItem: 'username',
+        position: 'right',
+        sort: true
+      },
+      {
+        columnName: 'Description',
+        modelItem: 'description',
+        position: 'right',
+        sort: true
+      },
+      {
+        columnName: 'Done',
+        modelItem: 'done',
+        position: 'right',
+        sort: false
+      },
+      {
+        columnName: 'Target date',
+        modelItem: 'targetDate',
+        position: 'right',
+        sort: true
+      }
+    ];
+  }
+
+  sortData(sortParameters: Sort) {
+    const keyName = sortParameters.active;
+    if (sortParameters.direction === 'asc') {
+      // @ts-ignore
+      this.todos = this.todos.sort((a: Todo, b: Todo) => a[keyName].localeCompare(b[keyName]));
+    } else if (sortParameters.direction === 'desc') {
+      // @ts-ignore
+      this.todos = this.todos.sort((a: Todo, b: Todo) => b[keyName].localeCompare(a[keyName]));
+    }
   }
 }
