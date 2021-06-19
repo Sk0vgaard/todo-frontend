@@ -16,7 +16,7 @@ import { NgbDateCustomParserFormatter } from './_shared/formatter/NgbDateCustomP
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableModule } from './_shared/components/table/table.module';
-import { OrdersComponent } from './mock-table/orders.component';
+import { ModalModule } from './_shared/components/modal/modal.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,6 @@ import { OrdersComponent } from './mock-table/orders.component';
     TodoListComponent,
     NavigationBarComponent,
     FooterComponent,
-    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +37,7 @@ import { OrdersComponent } from './mock-table/orders.component';
     MatTabsModule,
     BrowserAnimationsModule,
     TableModule,
+    ModalModule
   ],
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }

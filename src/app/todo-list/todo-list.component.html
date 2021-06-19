@@ -1,16 +1,23 @@
 <div class="padding">
   <h3>My todos</h3>
 
-<todo-reusable-table [tableData]="todos"
-                     [tableColumns]="todoTableColumns"
-                     [isFilterable]="true"
-                     [isPageable]="true"
-                     [paginationSizes]="[2,4,6]"
-                     [defaultPageSize]="4"
-                     (sort)="sortData($event)"
-                     [rowActionIcon]="'delete'"
-                     (rowAction)="deleteTodo($event)">
-</todo-reusable-table>
+  <todo-reusable-table [tableData]="todos"
+                       [tableColumns]="todoTableColumns"
+                       [isFilterable]="true"
+                       [isPageable]="true"
+                       [paginationSizes]="[2,4,6]"
+                       [defaultPageSize]="4"
+                       (sort)="sortData($event)"
+                       [rowActionIcon]="'delete'">
+  </todo-reusable-table>
 
-<!--<mock-orders></mock-orders>-->
+  <div>
+    <div class="button-row">
+      <button mat-raised-button (click)="openInfoModal()">Show Info Modal</button>
+      <button mat-raised-button (click)="openWarningModal()">Show Warning Modal</button>
+      <button mat-raised-button (click)="openErrorModal()">Show Error Modal</button>
+      <button mat-raised-button (click)="openModal()">Show Confirm Modal</button>
+    </div>
+  </div>
+
 </div>

@@ -3,6 +3,9 @@ import { Todo } from '../_shared/_models/todo';
 import { TodoService } from '../_services/data/todo.service';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from '../_shared/components/table/table-column';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalConfiguration, ModalService } from '../_shared/components/modal/modal.service';
+import { TestModalComponent } from '../_shared/components/modal/test-modal/test-modal.component';
 
 @Component({
   selector: 'todo-list',
@@ -14,24 +17,18 @@ export class TodoListComponent implements OnInit {
   public todos: Todo[] = [];
   public errorMessage: string;
   public todoTableColumns: TableColumn[];
+  public dialogSubmissionMessage: string = '';
 
-  constructor(private todoService: TodoService) {
+  constructor(
+    private todoService: TodoService,
+    private dialog: MatDialog,
+    private modalService: ModalService
+  ) {
   }
 
   public ngOnInit(): void {
     this.getAllTodos();
     this.initializeColumns();
-  }
-
-  private getAllTodos(): void {
-    this.todoService.getAllTodos('Skovgaard')
-      .subscribe(
-        (todos: Todo[]) => {
-          this.todos = todos;
-          console.log(this.todos);
-        },
-        error => this.errorMessage = error.error.message
-      );
   }
 
   public updateTodo(todo: Todo): void {
@@ -87,4 +84,42 @@ export class TodoListComponent implements OnInit {
       this.todos = this.todos.sort((a: Todo, b: Todo) => b[keyName].localeCompare(a[keyName]));
     }
   }
+
+  openInfoModal() {
+    this.modalService.openInfoModal('Hello Info');
+  }
+
+  openWarningModal() {
+    this.modalService.openWarningModal('Hello Warning');
+  }
+
+  openErrorModal() {
+    this.modalService.openErrorModal('Hello Error');
+  }
+
+  openModal() {
+    const modelConfig: ModalConfiguration = {
+      modalTitle: 'Testing with mr Hulki'
+    };
+    this.modalService.openModal(TestModalComponent, modelConfig)
+      .subscribe((answer: boolean) => {
+        if (answer) {
+          console.log('Yes, I love you.');
+          return;
+        }
+        console.log('No, I\'m sorry.');
+      });
+  }
+
+  private getAllTodos(): void {
+    this.todoService.getAllTodos('Skovgaard')
+      .subscribe(
+        (todos: Todo[]) => {
+          this.todos = todos;
+          console.log(this.todos);
+        },
+        error => this.errorMessage = error.error.message
+      );
+  }
+
 }
