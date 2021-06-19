@@ -1,7 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { AlertType } from '../alert-type.service';
-import { ModalAlertData } from '../modal-alert-data';
+import { Component, Inject } from '@angular/core';
+import { ModalAlertData } from './modal-alert-data';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+export enum AlertType {
+  INFO,
+  WARNING,
+  ERROR
+}
 
 @Component({
   selector: 'todo-alert',

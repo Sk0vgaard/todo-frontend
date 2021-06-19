@@ -1,4 +1,4 @@
-import { AlertType } from './alert-type.service';
+import { AlertType } from './alert.component';
 
 export class ModalAlertData {
   title: string;
@@ -6,7 +6,12 @@ export class ModalAlertData {
   alertType: AlertType;
   cancelButtonLabel: string;
 
-  constructor(data?: { title: string; content: string; alertType: AlertType; cancelButtonLabel: string; }) {
+  constructor(data?: {
+    title: string;
+    content: string;
+    alertType: AlertType;
+    cancelButtonLabel: string;
+  }) {
     if (data) {
       this.title = data.title;
       this.content = data.content;

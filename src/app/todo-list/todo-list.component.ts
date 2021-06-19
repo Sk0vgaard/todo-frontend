@@ -4,7 +4,7 @@ import { TodoService } from '../_services/data/todo.service';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from '../_shared/components/table/table-column';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalConfiguration, ModalService } from '../_shared/components/modal/modal.service';
+import { ModalConfiguration, ModalService, ModalSize } from '../_shared/components/modal/_services/modal.service';
 import { TestModalComponent } from '../_shared/components/modal/test-modal/test-modal.component';
 
 @Component({
@@ -17,7 +17,6 @@ export class TodoListComponent implements OnInit {
   public todos: Todo[] = [];
   public errorMessage: string;
   public todoTableColumns: TableColumn[];
-  public dialogSubmissionMessage: string = '';
 
   constructor(
     private todoService: TodoService,
@@ -39,8 +38,6 @@ export class TodoListComponent implements OnInit {
     this.todoService.deleteTodo(todo.id).subscribe(
       (todo: Todo) => {
         this.todos = this.todos.filter(item => item.id !== todo.id);
-        console.log(`Todo "${JSON.stringify(todo)}" has been deleted...`);
-        // this.getAllTodos();
       }, error => this.errorMessage = error.error.message
     );
   }
@@ -97,11 +94,31 @@ export class TodoListComponent implements OnInit {
     this.modalService.openErrorModal('Hello Error');
   }
 
-  openModal() {
+  openModal(todo: Todo) {
     const modelConfig: ModalConfiguration = {
-      modalTitle: 'Testing with mr Hulki'
+      modalTitle: `You are about to delete: ${todo.username}`,
+      confirmButtonLabel: `Delete`,
+      modelItem: todo
     };
-    this.modalService.openModal(TestModalComponent, modelConfig)
+    this.modalService.openModal(TestModalComponent, modelConfig, ModalSize.sm)
+      .subscribe((answer: boolean) => {
+        if (answer) {
+          this.deleteTodo(todo)
+          console.log(`${todo.username} has been deleted...`);
+          return;
+        }
+        console.log(`You have cancelled the deletion of ${todo.username}`);
+      });
+  }
+
+  openConfirmationDialog() {
+    const modelConfig: ModalConfiguration = {
+      modalTitle: 'Do you love meh..?',
+      modalContent: 'This is a test for the content of the confirmation dialog',
+      confirmButtonLabel: 'Gem',
+      cancelButtonLabel: 'Annuler'
+    };
+    this.modalService.openConfirmationDialog(TestModalComponent, modelConfig)
       .subscribe((answer: boolean) => {
         if (answer) {
           console.log('Yes, I love you.');

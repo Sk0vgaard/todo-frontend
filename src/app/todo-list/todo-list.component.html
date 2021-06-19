@@ -8,7 +8,8 @@
                        [paginationSizes]="[2,4,6]"
                        [defaultPageSize]="4"
                        (sort)="sortData($event)"
-                       [rowActionIcon]="'delete'">
+                       [rowActionIcon]="'delete'"
+                       (rowAction)="openModal($event)">
   </todo-reusable-table>
 
   <div>
@@ -16,7 +17,7 @@
       <button mat-raised-button (click)="openInfoModal()">Show Info Modal</button>
       <button mat-raised-button (click)="openWarningModal()">Show Warning Modal</button>
       <button mat-raised-button (click)="openErrorModal()">Show Error Modal</button>
-      <button mat-raised-button (click)="openModal()">Show Confirm Modal</button>
+      <button mat-raised-button (click)="openConfirmationDialog()">Show Confirm Modal</button>
     </div>
   </div>
 

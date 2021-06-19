@@ -1,24 +1,32 @@
 import { Component, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertType } from './alert-type.service';
-import { ModalAlertData } from './modal-alert-data';
-import { AlertComponent } from './alert/alert.component';
-import { TestModalComponent } from './test-modal/test-modal.component';
-import { ModalInterface } from './modal-interface';
+import { ModalAlertData } from '../alert/modal-alert-data';
+import { AlertComponent, AlertType } from '../alert/alert.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { Observable } from 'rxjs';
+
+export interface ModalConfiguration {
+  modalTitle: string,
+  modalContent?: string,
+  cancelButtonLabel?: string,
+  confirmButtonLabel?: string,
+  modelItem?: Object
+}
+
+export interface ModalInterface {
+  modalTitle: string;
+  modalContent?: string;
+  confirmButtonLabel: string;
+  cancelButtonLabel: string;
+  modelItem?: Object;
+  component?: Component
+}
 
 export enum ModalSize {
   tn = '300px',
   sm = '500px',
   md = '750px',
   hg = '1000px'
-}
-
-export interface ModalConfiguration {
-  modalTitle: string,
-  cancelButtonLabel?: string,
-  confirmButtonLabel?: string,
 }
 
 @Injectable({
@@ -35,30 +43,35 @@ export class ModalService {
 
 
   openInfoModal(message: string) {
-    this.openAlertModal(message, AlertType.INFO);
+    this.openAlertDialog(message, AlertType.INFO);
   }
 
   openWarningModal(message: string) {
-    this.openAlertModal(message, AlertType.WARNING);
+    this.openAlertDialog(message, AlertType.WARNING);
   }
 
   openErrorModal(message: string) {
-    this.openAlertModal(message, AlertType.ERROR);
+    this.openAlertDialog(message, AlertType.ERROR);
   }
 
-  openConfirmationDialog(message: string, callBackFunction: Function, component?: Component) {
+  openConfirmationDialog<T>(
+    component: ComponentType<T>,
+    modalConfiguration: ModalConfiguration,
+    modalSize: ModalSize = ModalSize.tn
+  ) {
     const modalInterface: ModalInterface = {
-      modalTitle: 'I am created by Reusable dialog',
-      modalContent: 'I am second dialog',
-      cancelButtonLabel: 'Cancel',
-      confirmButtonLabel: 'Delete',
+      modalTitle: modalConfiguration.modalTitle,
+      modalContent: modalConfiguration.modalContent,
+      confirmButtonLabel: modalConfiguration.confirmButtonLabel ? modalConfiguration.confirmButtonLabel : this.confirmButtonLabel,
+      cancelButtonLabel: modalConfiguration.cancelButtonLabel ? modalConfiguration.cancelButtonLabel : this.cancelButtonLabel,
     };
-    const dialogRef = this.dialog.open(TestModalComponent, {
-      width: '200px',
-      data: modalInterface
+    const dialogRef = this.dialog.open(component, {
+      width: modalSize,
+      data: modalInterface,
+      autoFocus: true
     });
 
-    dialogRef.afterClosed().subscribe(result => callBackFunction(result));
+    return dialogRef.afterClosed();
   }
 
   openModal<T>(
@@ -70,6 +83,7 @@ export class ModalService {
       modalTitle: modalConfiguration.modalTitle,
       confirmButtonLabel: modalConfiguration.confirmButtonLabel ? modalConfiguration.confirmButtonLabel : this.confirmButtonLabel,
       cancelButtonLabel: modalConfiguration.cancelButtonLabel ? modalConfiguration.cancelButtonLabel : this.cancelButtonLabel,
+      modelItem: modalConfiguration.modelItem
     };
     const dialogRef = this.dialog.open(component, {
       width: modalSize,
@@ -81,7 +95,7 @@ export class ModalService {
     return dialogRef.afterClosed();
   }
 
-  openAlertModal(message: string, alertType: AlertType) {
+  openAlertDialog(message: string, alertType: AlertType) {
     const dialogRef = this.dialog.open(AlertComponent, {
       width: '300px',
       data: new ModalAlertData({
