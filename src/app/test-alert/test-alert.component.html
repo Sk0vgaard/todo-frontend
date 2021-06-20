@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{ data.modalTitle }}</h2>
+<mat-dialog-content>
+  <div>
+    <mat-icon [ngStyle]="{'color': getAlertColor()}">{{ getAlertIcon() }}</mat-icon>
+    {{ data.modalContent }}
+  </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" [mat-dialog-close]="data.modalTitle">
+    {{ data.cancelButtonLabel }}
+  </button>
+</mat-dialog-actions>

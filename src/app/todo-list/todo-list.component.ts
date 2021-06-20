@@ -4,8 +4,9 @@ import { TodoService } from '../_services/data/todo.service';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from '../_shared/components/table/table-column';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalConfiguration, ModalService, ModalSize } from '../_shared/components/modal/_services/modal.service';
-import { TestModalComponent } from '../_shared/components/modal/test-modal/test-modal.component';
+import { TestModalComponent } from '../test-modal/test-modal.component';
+import { AlertType, ModalConfiguration, ModalDemoService, ModalSizeEnum } from 'modal-demo';
+import { TestAlertComponent } from '../test-alert/test-alert.component';
 
 @Component({
   selector: 'todo-list',
@@ -21,7 +22,7 @@ export class TodoListComponent implements OnInit {
   constructor(
     private todoService: TodoService,
     private dialog: MatDialog,
-    private modalService: ModalService
+    private modalService: ModalDemoService
   ) {
   }
 
@@ -83,15 +84,30 @@ export class TodoListComponent implements OnInit {
   }
 
   openInfoModal() {
-    this.modalService.openInfoModal('Hello Info');
+    const modelConfig: ModalConfiguration = {
+      modalTitle: `Hello ${AlertType.INFO}`,
+      modalContent: `This is the content of ${AlertType.INFO}, which is kinda awesome...!`,
+      confirmButtonLabel: `Close`,
+    };
+    this.modalService.openAlertDialog(TestAlertComponent, modelConfig, AlertType.INFO);
   }
 
   openWarningModal() {
-    this.modalService.openWarningModal('Hello Warning');
+    const modelConfig: ModalConfiguration = {
+      modalTitle: `Hello ${AlertType.WARNING}`,
+      modalContent: `This is the content of ${AlertType.WARNING}, which is kinda awesome...!`,
+      confirmButtonLabel: `Close`,
+    };
+    this.modalService.openAlertDialog(TestAlertComponent, modelConfig, AlertType.WARNING);
   }
 
   openErrorModal() {
-    this.modalService.openErrorModal('Hello Error');
+    const modelConfig: ModalConfiguration = {
+      modalTitle: `Hello ${AlertType.ERROR}`,
+      modalContent: `This is the content of ${AlertType.ERROR}, which is kinda awesome...!`,
+      confirmButtonLabel: `Close`,
+    };
+    this.modalService.openAlertDialog(TestAlertComponent, modelConfig, AlertType.ERROR);
   }
 
   openModal(todo: Todo) {
@@ -100,10 +116,10 @@ export class TodoListComponent implements OnInit {
       confirmButtonLabel: `Delete`,
       modelItem: todo
     };
-    this.modalService.openModal(TestModalComponent, modelConfig, ModalSize.sm)
+    this.modalService.openModal(TestModalComponent, modelConfig, ModalSizeEnum.sm)
       .subscribe((answer: boolean) => {
         if (answer) {
-          this.deleteTodo(todo)
+          this.deleteTodo(todo);
           console.log(`${todo.username} has been deleted...`);
           return;
         }

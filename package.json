@@ -24,6 +24,8 @@
     "@angular/router": "~11.1.2",
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "angular-confirmation-popover": "^6.0.0",
+    "modal-demo": "file:../angularLibraryDemo/dist/modal-demo/modal-demo-0.0.1.tgz",
+    "my-demo-lib": "file:../angularLibraryDemo/dist/my-demo-lib/my-demo-lib-0.0.1.tgz",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
