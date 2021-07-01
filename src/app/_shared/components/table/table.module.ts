@@ -9,7 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TableComponent } from './table-component/table.component';
-import { DataPropertyGetterPipe } from './date-property-getter';
+import { DataPropertyGetterPipe } from './data-property-getter';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { DataPropertyGetterPipe } from './date-property-getter';
     MatIconModule,
     MatButtonModule,
     MatTabsModule,
+    NgxSkeletonLoaderModule,
   ],
   exports: [
     TableComponent,

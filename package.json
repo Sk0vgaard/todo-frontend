@@ -26,6 +26,7 @@
     "angular-confirmation-popover": "^6.0.0",
     "modal-demo": "file:../angularLibraryDemo/dist/modal-demo/modal-demo-0.0.1.tgz",
     "my-demo-lib": "file:../angularLibraryDemo/dist/my-demo-lib/my-demo-lib-0.0.1.tgz",
+    "ngx-skeleton-loader": "^2.10.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

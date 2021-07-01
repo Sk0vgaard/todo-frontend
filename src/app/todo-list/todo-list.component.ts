@@ -17,7 +17,7 @@ export class TodoListComponent implements OnInit {
 
   public todos: Todo[] = [];
   public errorMessage: string;
-  public todoTableColumns: TableColumn[];
+  public todoTableColumns: TableColumn[] = [];
 
   constructor(
     private todoService: TodoService,
@@ -27,8 +27,8 @@ export class TodoListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.getAllTodos();
     this.initializeColumns();
+    this.getAllTodos();
   }
 
   public updateTodo(todo: Todo): void {
@@ -66,7 +66,6 @@ export class TodoListComponent implements OnInit {
       {
         columnName: 'Target date',
         modelItem: 'targetDate',
-        position: 'right',
         sort: true
       }
     ];

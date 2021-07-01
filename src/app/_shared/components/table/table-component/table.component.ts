@@ -10,8 +10,12 @@ import { TableColumn } from '../table-column';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterViewInit {
+
   public tableDataSource: MatTableDataSource<any>;
   public displayedColumns: string[];
+
+  isLoading = true;
+
   @ViewChild(MatPaginator, {static: false}) matPaginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) matSort: MatSort;
 
@@ -32,7 +36,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   constructor() {
-    this.tableDataSource = new MatTableDataSource<any>()
+    this.tableDataSource = new MatTableDataSource<any>();
   }
 
   ngOnInit(): void {
@@ -47,12 +51,17 @@ export class TableComponent implements OnInit, AfterViewInit {
   // we need this, in order to make pagination work with *ngIf
   ngAfterViewInit(): void {
     this.tableDataSource.paginator = this.matPaginator;
+    this.tableDataSource = new MatTableDataSource<any>([{}]);
   }
 
   setTableDataSource(data: any) {
     this.tableDataSource = new MatTableDataSource<any>(data);
     this.tableDataSource.paginator = this.matPaginator;
     this.tableDataSource.sort = this.matSort;
+
+    if (data.length > 0) {
+      this.isLoading = false;
+    }
   }
 
   applyFilter(event: Event) {

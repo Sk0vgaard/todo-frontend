@@ -19,6 +19,7 @@ import { ModalDemoModule } from 'modal-demo';
 import { TestModalComponent } from './test-modal/test-modal.component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TestAlertComponent } from './test-alert/test-alert.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { TestAlertComponent } from './test-alert/test-alert.component';
     BrowserAnimationsModule,
     TableModule,
     ModalDemoModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
