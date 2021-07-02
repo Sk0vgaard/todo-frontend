@@ -26,6 +26,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() rowActionIcon: string;
   @Input() paginationSizes: number[] = [5, 10, 15];
   @Input() defaultPageSize = this.paginationSizes[1];
+  @Input() skeletonCount = 4;
 
   @Output() sort: EventEmitter<Sort> = new EventEmitter();
   @Output() rowAction: EventEmitter<any> = new EventEmitter<any>();
